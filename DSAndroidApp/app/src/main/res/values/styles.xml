@@ -1,0 +1,50 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
+
+    <style name="editText">
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:textColorHint">@color/editTextHint</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="drawerListItem">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+    <style name="drawerListItemIcon">
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:layout_width">25dp</item>
+    </style>
+    <style name="photoFeedCaption">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="actionAreaBtns">
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="newStatusHeader">
+        <item name="android:background">@drawable/bg_newstatus_header</item>
+    </style>
+    <style name="newStatusFooter">
+        <item name="android:background">@drawable/bg_newstatus_header</item>
+    </style>
+    <style name="newStatusBody">
+        <item name="android:background">@drawable/bg_newstatus_header</item>
+    </style>
+    <style name="statusEditText">
+        <item name="android:background">@drawable/bg_status_editetxt</item>
+        <item name="android:textColorHint">@color/statusEditTextBorder</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Vote4it</string>
+
+    <string-array name="navDrawerItems">
+        <item>Home</item>
+        <item>My Profile</item>
+        <item>Settings</item>
+        <item>Logout</item>
+    </string-array>
+
+    <array name="navDrawerIcons">
+        <item>@drawable/ic_action_home</item>
+        <item>@drawable/ic_my_profile</item>
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_logout</item>
+    </array>
+
+    <string name="default_local_country">Greece</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="status">Science is a beautiful and emotional human endeavor</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <!--  RegisterActivity-->
+    <string name="reg_activity_label">Register New Account</string>
+    <string name="reg_title">REGISTER</string>
+    <string name="reg_chooseAvatar">Choose Avatar</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_username">Username</string>
+    <string name="reg_password">Password</string>
+    <string name="reg_retype_password">Retype Password</string>
+    <string name="reg_username_hint">4-30 chars (a-z A-Z 0-9 _ .)</string>
+    <string name="reg_email_hint">someone@something.com</string>
+    <string name="reg_password_hint">6-20 chars (a-z A-Z 0-9 @ # $ %)</string>
+    <string name="reg_link_to_login">Already have an account? Login here</string>
+    <string name="reg_country">Country</string>
+
+    <!--  LoginActivity-->
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_title">LOGIN</string>
+    <string name="login_link_to_register">New to Vote4it? Register here</string>
+    <string name="login_activity_label">Vote4it</string>
+    <string name="login_link_to_forget">Forgot your password? Click here</string>
+
+    <string name="default_username">Anonymous</string>
+
+    <string name="loadingText">Loading more content ...</string>
+
+    <item name="TAG_OBJECT" type="id"/>
+
+</resources>
