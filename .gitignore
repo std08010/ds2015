@@ -3,3 +3,9 @@ target/
 .metadata/
 .settings/
 .classpath
+*.cert
+*.key
+*.pem
+*.ppk
+general_credentials.txt
+amazon_user_ds_credentials.csv
