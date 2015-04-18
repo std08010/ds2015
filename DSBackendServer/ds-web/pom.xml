@@ -1,0 +1,41 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>ds-web</artifactId>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>com.ds.di</groupId>
+		<artifactId>ds</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../ds-pom</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ds.di</groupId>
+			<artifactId>ds-model</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ds.di</groupId>
+			<artifactId>ds-dao</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ds.di</groupId>
+			<artifactId>ds-utils</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ds.di</groupId>
+			<artifactId>ds-dto</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+	</dependencies>
+</project>

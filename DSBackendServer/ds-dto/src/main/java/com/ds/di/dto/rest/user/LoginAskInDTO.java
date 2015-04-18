@@ -1,0 +1,48 @@
+/**
+ * 
+ */
+package com.ds.di.dto.rest.user;
+
+/**
+ * @author Altin Cipi
+ *
+ */
+public class LoginAskInDTO
+{
+	private String	username;
+	private String	password;
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername()
+	{
+		return username;
+	}
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword()
+	{
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+}
