@@ -18,10 +18,10 @@ Aytos o fakelos periexei ena self-signed certificate pou xreiazete o tomcat gia 
 
 3. Gia na syndetheite me Fielzilla sto EC2 instance pou exoume kante ta eksis:
 	a) Anoikste ta Settings kai pigente sto Connection -> SFTP kai patiste Add keyfile. Dwste to "ec2_ds_security_key_filezilla.ppk"
-	b) Ftiakste ena kainourgio Site me host: 52.16.137.213 , port: 22 , protocol: SFTP , Logon Type: Normal, User: ubuntu, Password: NO PASSWORD (keno)
+	b) Ftiakste ena kainourgio Site me host: 52.17.140.15 , port: 22 , protocol: SFTP , Logon Type: Normal, User: ubuntu, Password: NO PASSWORD (keno)
 
 4. Gia na syndetheite me putty sto EC2 instance pou exoume kante ta eksis:
-	a) anoikste to putty kai gia host name valte : ubuntu@52.16.137.213, port: 22, connection type: SSH
+	a) anoikste to putty kai gia host name valte : ubuntu@52.17.140.15, port: 22, connection type: SSH
 	b) pigainte sto Connection -> SSH -> Auth kai ekei pou leei authentication parameters -> Private key file for authentication
 		patiste Browse kai valte to "ec2_ds_security_key_putty.ppk"
 	c) Ean thelete gia na min to kanete ayto synexeia swste to session kai kathe fore pou anoigete to putty dialekste to kai kante load.
