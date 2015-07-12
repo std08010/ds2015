@@ -12,23 +12,39 @@ public class ServerCollection {
 	
 	public ServerCollection(InetSocketAddress... srvs){
 		servers = new ArrayList<ServerUnit>();
-		for(InetSocketAddress address : srvs)
-			servers.add(new ServerUnit(address));
+		int i=0;
+		for(InetSocketAddress address : srvs){
+			ServerUnit s = new ServerUnit(address);
+			s.setIndex(i);
+			servers.add(s);
+			i++;
+		}
 		updateThread = null;
 	}
 	
 	public ServerUnit getForRequest(){
 		ServerUnit result = servers.get(0);
 		result.recordRequest();
-		if(servers.size()>1 && result.compareTo(servers.get(1))>0){
-			if(alreadyReplaced)
-				Collections.sort(servers);
-			else{
-				servers.set(0, servers.set(1, result));
-				alreadyReplaced = true;
-			}
+		synchronized (servers) {
+			Collections.sort(servers);
 		}
+//		if(servers.size()>1 && result.compareTo(servers.get(1))>0){
+//			if(alreadyReplaced){
+//				Collections.sort(servers);
+//				alreadyReplaced = false;
+//			}
+//			else{
+//				servers.set(0, servers.set(1, result));
+//				alreadyReplaced = true;
+//			}
+//		}
 		return result;
+	}
+	
+	public void registerServerFailure(ServerUnit unit){
+		unit.rank += 10000;
+		Collections.sort(servers);
+		alreadyReplaced = false;
 	}
 	
 	public void startStatusUpdates(long interval){
@@ -36,7 +52,7 @@ public class ServerCollection {
 		updateThread.start();
 	}
 	
-	public void stopStatusUpdates(long interval){
+	public void stopStatusUpdates(){
 		if(updateThread!=null){
 			updateThread.terminate();
 			updateThread = null;
@@ -50,9 +66,9 @@ public class ServerCollection {
 		Collections.sort(servers);
 		alreadyReplaced = false;
 		
-//		for(ServerUnit unit : servers){
-//			//System.out.println(unit);
-//		}
+		for(ServerUnit unit : servers){
+			System.out.println(unit);
+		}
 
 	}
 	

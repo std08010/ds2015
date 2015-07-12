@@ -14,7 +14,7 @@ class LoadBalanceTester {
 	
 	private static final Integer	NO_OF_REQUESTS_1K	= 1000;
 	private static final Integer	NO_OF_REQUESTS_10K	= 10000;
-	private static final Integer	NO_OF_REQUESTS_100K	= 100000;
+	private static final Integer	NO_OF_REQUESTS_100K	= 300000;
 	private static final Integer	NO_OF_REQUESTS_1M	= 1000000;
 	private static final Integer	NO_OF_REQUESTS_10M	= 10000000;
 	private static final Integer	NO_OF_REQUESTS_100M	= 100000000;
@@ -24,7 +24,7 @@ class LoadBalanceTester {
 
 	public static void main(String[] args) throws Exception {
 		
-		sendMassiveParallelRequests(NO_OF_THREADS, NO_OF_REQUESTS_10K, DOMAIN, REST_TEST_URL);
+		sendMassiveParallelRequests(NO_OF_THREADS, NO_OF_REQUESTS_100K, DOMAIN, REST_TEST_URL);
 	}
 	
 	

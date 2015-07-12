@@ -13,23 +13,36 @@ public class ServerCollectionUpdateThread extends Thread {
 	@Override
 	public void run(){
     	toStop = false;
-        while(!toStop)
-        	updateStep();
+    	synchronized(this){
+    		while(!toStop){
+    			servers.updateStatuses();
+    			try {
+    				this.wait(interval);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		}
+    	}
     }
 	
+
 	public void terminate(){
 		toStop = true;
-		notify();
-	}
-    
-    public synchronized void updateStep(){
-    	
-    	try {
-    		servers.updateStatuses();
-			wait(interval);
+		synchronized(this){
+			this.notify();
+		}
+		try {
+			join();
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+    
+    public void updateLoop(){
+    	
+    	servers.updateStatuses();
     }
                                      
 }

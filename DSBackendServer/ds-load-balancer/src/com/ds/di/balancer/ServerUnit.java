@@ -15,14 +15,45 @@ import org.xlightweb.client.HttpClient;
 import org.xsocket.Execution;
 
 public class ServerUnit  implements Comparable<ServerUnit>{
-	private static final double weight = 0.2;
-	private static final double requestWeight = 0.7;
+	private static final double statusUpdateWeight = 0.75;
+	private static final double requestUpdateWeight = 0.5;
+	private static final double requestWeight = 1.0;
+	
+	private double cpuUsage;
+	private double latency;
+	private int index;
+	
 	public ServerUnit(InetSocketAddress address){
 		this.address = address;
 		rank = 100.0;
+		cpuUsage = 100;
+		latency = 10000;
 	}
 	private InetSocketAddress address;
 	public Double rank;
+	
+	public synchronized double getRank(){
+		return rank;
+	}
+	public synchronized void setRank(double r){
+		rank = r;
+	}
+	
+	public void setIndex(int index){
+		this.index = index;
+	}
+	
+	public int getIndex(){
+		return index;
+	}
+	
+	public double getCpuUsage(){
+		return cpuUsage;
+	}
+
+	public double getLatency(){
+		return latency;
+	}
 	
 	public InetSocketAddress getAddress(){
 		return address;
@@ -51,32 +82,40 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	        couldConnect = true;
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	    long stopTime = System.nanoTime();
 	    if(couldConnect){
 	    	double newRank = ((double)(stopTime-startTime))*0.000001 + contention;
 	    	synchronized (rank) {
-	    		rank = weight*newRank + (1.0-weight)*rank;				
+	    		rank = statusUpdateWeight*newRank + (1.0-statusUpdateWeight)*rank;
+	    		cpuUsage = contention;
+	    		latency = (double)(stopTime-startTime)*0.000001;
+			}
+	    } else {
+	    	synchronized (rank) {
+		    	rank = (double) 10000;
+		    	cpuUsage = 100;
+		    	latency = 10000;
 			}
 	    }
 	}
 	
-	public void recordRequest(){
-    	synchronized (rank) {
-        	double newRank = rank + requestWeight;
-    		rank = weight*newRank + (1.0-weight)*rank;				
-		}
+	public synchronized void recordRequest(){
+    	double newRank = rank + requestWeight;
+		rank = requestUpdateWeight*newRank + (1.0-requestUpdateWeight)*rank;				
 	}
 
 	@Override
 	public int compareTo(ServerUnit arg0) {
-		return rank==arg0.rank?0:(rank<arg0.rank?-1:1);
+		synchronized (this) {
+			return rank==arg0.rank?0:(rank<arg0.rank?-1:1);
+		}
 	}
 	
 	@Override
 	public String toString(){
-		return address.getHostString()+":"+address.getPort()+" " + ((int)(rank*10))*0.1;
+		return address.getHostString()+":"+address.getPort()+" " + ((int)(getRank()*10))*0.1;
 	}
 }
 
