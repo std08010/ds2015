@@ -42,10 +42,12 @@ class LoadBalanceTesterThread extends Thread {
 		for(int i=0; i<iterations; i++) {
 			sendSingleRequest(domain, requestURL);
 			
-			if(i%100==0){
+			if((i%100)==0){
 				System.out.println("Thread " + myThreadID + ": " + i + " requests have been sent ");
 			}
 		}
+		
+		System.out.println("Thread " + myThreadID + ": " + iterations + " requests have been sent ");
 	}
 	
 	
