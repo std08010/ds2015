@@ -28,7 +28,6 @@ public class ServerCollection {
 				alreadyReplaced = true;
 			}
 		}
-		System.out.println(result);
 		return result;
 	}
 	

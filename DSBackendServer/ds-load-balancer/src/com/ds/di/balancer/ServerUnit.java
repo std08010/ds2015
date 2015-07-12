@@ -16,7 +16,7 @@ import org.xsocket.Execution;
 
 public class ServerUnit  implements Comparable<ServerUnit>{
 	private static final double weight = 0.2;
-	private static final double requestWeight = 1.0;
+	private static final double requestWeight = 0.7;
 	public ServerUnit(InetSocketAddress address){
 		this.address = address;
 		rank = 100.0;
@@ -76,7 +76,7 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	
 	@Override
 	public String toString(){
-		return address.getHostString()+address.getPort()+" " + ((int)(rank*10))*0.1;
+		return address.getHostString()+":"+address.getPort()+" " + ((int)(rank*10))*0.1;
 	}
 }
 

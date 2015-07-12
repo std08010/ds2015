@@ -6,7 +6,6 @@ package com.ds.di.rest.general;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import javax.management.Attribute;
 import javax.management.AttributeList;
@@ -23,9 +22,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ds.di.service.user.UserService;
 import com.ds.di.utils.RestServiceUtils;
 
 /**
@@ -39,6 +41,10 @@ public class BalancerRestService
 {
 	public static final String	SPRING_KEY	= "com.ds.di.rest.general.BalancerRestService";
 	
+	@Autowired
+	@Qualifier(UserService.SPRING_KEY)
+	private UserService			userService;
+
 	/**
 	 * @return
 	 */
@@ -57,8 +63,7 @@ public class BalancerRestService
 			
 
 			long nanoBefore = System.nanoTime();
-			//performWork(100000);
-			//contention = (double)(System.nanoTime() - nanoBefore)* 0.000001;
+			performWork(10);
 			contention = getProcessCpuLoad();
 			if(contention<0)
 				contention = 100;
@@ -96,12 +101,10 @@ public class BalancerRestService
 	}
 	
 	void performWork(int iterations){
-		MessageDigest md = null;
 		try {
-			md = MessageDigest.getInstance("SHA-1");
 			for(int i=0; i<iterations; i++)
-				md.digest("test".getBytes());
-		} catch (NoSuchAlgorithmException e) {
+				userService.find((long)i);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
