@@ -60,7 +60,8 @@ public class BalancerRestService
 			//performWork(100000);
 			//contention = (double)(System.nanoTime() - nanoBefore)* 0.000001;
 			contention = getProcessCpuLoad();
-			contention = contention==Double.NaN?100:contention;
+			if(contention<0)
+				contention = 100;
 			
 
 		}
@@ -80,14 +81,14 @@ public class BalancerRestService
 	    ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
 	    AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
 
-	    if (list.isEmpty())     return Double.NaN;
+	    if (list.isEmpty())     return -1;
 
 	    Attribute att = (Attribute)list.get(0);
 	    Double value  = (Double)att.getValue();
 
-	    if (value == -1.0)      return Double.NaN;  // usually takes a couple of seconds before we get real values
+	    if (value == -1.0)      return -1;  // usually takes a couple of seconds before we get real values
 
-	    return ((int)(value * 1000) / 10.0);        // returns a percentage value with 1 decimal point precision
+	    return value * 100;        // returns a percentage value with 1 decimal point precision
 	}
 	
 	public static double getMemoryContention(){

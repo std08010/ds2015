@@ -9,15 +9,17 @@ class LoadBalancer {
 	
 
 	public static void main(String[] args) throws Exception {
-		InetSocketAddress[] srvs = new InetSocketAddress[] {
+		ServerCollection servers = new ServerCollection(new InetSocketAddress[] {
 			new InetSocketAddress("10.0.0.2", 8080),
-			new InetSocketAddress("10.0.0.2", 8081),
-			new InetSocketAddress("10.0.0.2", 8082),
-			new InetSocketAddress("10.0.0.2", 8083)};
-		//HttpServer loadBalancer = new HttpServer(80, new LoadBalancerHandler(srvs));
-		//loadBalancer.run();
+			new InetSocketAddress("10.0.0.2", 8081)
+			//new InetSocketAddress("10.0.0.2", 8082),
+			//new InetSocketAddress("10.0.0.2", 8083)
+		});
+
+		servers.startStatusUpdates(2000);
 		
-		ServerUnit unit = new ServerUnit(new InetSocketAddress("10.0.0.2", 8080));
-		unit.getStatus();
+		HttpServer loadBalancer = new HttpServer(80, new LoadBalancerHandler(servers));
+		loadBalancer.run();
+		
 	}
 }

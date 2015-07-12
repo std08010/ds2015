@@ -19,16 +19,15 @@ import org.xsocket.ILifeCycle;
 //import sun.net.www.http.HttpClient;
 
 class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
-	   private final List<InetSocketAddress> servers = new ArrayList<InetSocketAddress>();
+	   private ServerCollection servers;
 	   private HttpClient httpClient;
-	   private static int roundrobin = 0;
 
 	   /*
 	    * this class does not implement server monitoring or healthiness checks
 	    */
 
-	   public LoadBalancerHandler(InetSocketAddress... srvs) {
-	      servers.addAll(Arrays.asList(srvs));
+	   public LoadBalancerHandler(ServerCollection servers) {
+	      this.servers = servers;
 	   }
 
 	  public void onInit() {
@@ -44,18 +43,11 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 	   public void onRequest(final IHttpExchange exchange) throws IOException {
 	      IHttpRequest request = exchange.getRequest();
 
-	      // determine the business server based on the id's hashcode
-	      //Integer customerId = request.getRequiredIntParameter("id");
-	      //int idx = customerId.hashCode() % servers.size();
-	      //if (idx < 0) {
-	      //   idx *= -1;
-	      //}
-	      int idx = 0;
-	      roundrobin = (roundrobin+1)% servers.size();
-	      idx = roundrobin;
+
+
 
 	      // retrieve the business server address and update the Request-URL of the request
-	      InetSocketAddress server = servers.get(idx);
+	      InetSocketAddress server = servers.getForRequest().getAddress();
 	      final URL url = request.getRequestUrl();
 	      final URL newUrl = new URL(url.getProtocol(), server.getHostName(), server.getPort(), url.getFile());
 	      
@@ -73,7 +65,6 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 
 	         @Execution(Execution.NONTHREADED)
 	         public void onResponse(IHttpResponse response) throws IOException {
-	        	 System.out.println(response.getServer());
 	        	 String location = response.getHeader("Location");
 	        	 if(location != null && location.length()>0){
 	        		 if(location.contains(newDomain)){
