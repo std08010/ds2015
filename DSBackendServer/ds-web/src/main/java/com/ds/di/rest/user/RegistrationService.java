@@ -23,8 +23,9 @@ import com.ds.di.dto.rest.user.RegistrationCheckUsernameAvailabilityOutDTO;
 import com.ds.di.dto.rest.user.RegistrationCreateInDTO;
 import com.ds.di.dto.rest.user.RegistrationCreateOutDTO;
 import com.ds.di.model.user.User;
-import com.ds.di.service.general.CountryService;
+import com.ds.di.service.general.CountryServiceRead;
 import com.ds.di.service.user.UserService;
+import com.ds.di.service.user.UserServiceRead;
 import com.ds.di.utils.AmazonS3UploadThread;
 import com.ds.di.utils.EmailValidator;
 import com.ds.di.utils.RestServiceUtils;
@@ -36,7 +37,7 @@ import com.ds.di.utils.UsernameValidator;
  *
  */
 @Component(value = RegistrationService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManager")
 @Path("/secure/user/register")
 public class RegistrationService
 {
@@ -47,8 +48,12 @@ public class RegistrationService
 	private UserService			userService;
 
 	@Autowired
-	@Qualifier(CountryService.SPRING_KEY)
-	private CountryService		countryService;
+	@Qualifier(UserServiceRead.SPRING_KEY)
+	private UserServiceRead		userServiceRead;
+
+	@Autowired
+	@Qualifier(CountryServiceRead.SPRING_KEY)
+	private CountryServiceRead	countryServiceRead;
 
 	@Autowired
 	@Qualifier(value = "myProperties")
@@ -94,7 +99,7 @@ public class RegistrationService
 				newUser.setUsername(input.getUsername());
 				newUser.setPassword(SecurityUtils.generateStrongPasswordHash(input.getPassword()));
 				newUser.setEmail(input.getEmail());
-				newUser.setCountry(countryService.getCountry(input.getCountry()));
+				newUser.setCountry(this.countryServiceRead.getCountry(input.getCountry()));
 				newUser.setSessionToken(this.userService.generateSessionToken(newUser));
 				this.userService.create(newUser);
 
@@ -147,7 +152,7 @@ public class RegistrationService
 
 		try
 		{
-			User user = this.userService.getUser(input.getUsername());
+			User user = this.userServiceRead.getUser(input.getUsername());
 
 			if (user == null)
 			{

@@ -26,5 +26,16 @@
     <color name="profileCountry">#99ffffff</color>
 
     <color name="tabsScrollColor">#3b5998</color>
+    <color name="actionBar">#E91E63</color>
+    <color name="slots_list_item_bg">#ffffff</color>
+    <color name="slotPublishDate">#000000</color>
+    <color name="slotOwner">#3b5998</color>
+    <color name="slotBg">#E0E0E0</color>
+    <color name="slotStatus">#8A8A8A</color>
 
+    <color name="changePhotoButton">#FFAB40</color>
+    <color name="changePhotoButtonPressed">#FFC279</color>
+
+    <color name="deletePhotoButton">#8A8A8A</color>
+    <color name="deletePhotoButtonPressed">#AAAAAA</color>
 </resources>

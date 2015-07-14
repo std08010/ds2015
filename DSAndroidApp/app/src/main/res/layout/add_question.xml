@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/slotBg"
+              android:orientation="vertical"
+              android:padding="8dp"
+              tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:id="@+id/addQuestionBody"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Question Description"/>
+
+        <EditText
+            android:id="@+id/addQuestionCaption"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option1"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 1"/>
+
+        <EditText
+            android:id="@+id/option1Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option2"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 2"/>
+
+        <EditText
+            android:id="@+id/option2Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option3"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 3"/>
+
+        <EditText
+            android:id="@+id/option3Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option4"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 4"/>
+
+        <EditText
+            android:id="@+id/option4Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option5"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 5"/>
+
+        <EditText
+            android:id="@+id/option5Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/option6"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/slotOwner"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Option 6"/>
+
+        <EditText
+            android:id="@+id/option6Descr"
+            style="@style/statusEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="top|left"
+            android:hint="Write something..."
+            android:inputType="textMultiLine">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/addQuestionFooter"
+        style="@style/newStatusFooter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/addQuestionBtn"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_change_photo_button"
+            android:text="CREATE POLL"
+            android:textColor="@color/black"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</LinearLayout>

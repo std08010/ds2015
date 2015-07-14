@@ -17,7 +17,7 @@ import com.ds.di.utils.Globals;
  */
 @Repository(value = ContinentDAO.SPRING_KEY)
 @Scope(Globals.SPRING_SCOPE_PROTOTYPE)
-@Transactional
+@Transactional(value = "transactionManager")
 public class ContinentDAO extends AbstractDAOImpl<Continent, Long>
 {
 	public static final String	SPRING_KEY	= "com.ds.di.dao.general.ContinentDAO";

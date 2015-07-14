@@ -5,13 +5,15 @@
 
     <string-array name="navDrawerItems">
         <item>Home</item>
-        <item>My Profile</item>
+        <item>Create Poll</item>
+        <item>My Questions</item>
         <item>Settings</item>
         <item>Logout</item>
     </string-array>
 
     <array name="navDrawerIcons">
         <item>@drawable/ic_action_home</item>
+        <item>@drawable/ic_add_white</item>
         <item>@drawable/ic_my_profile</item>
         <item>@drawable/ic_action_settings</item>
         <item>@drawable/ic_action_logout</item>
@@ -53,6 +55,27 @@
 
     <string name="loadingText">Loading more content ...</string>
 
+    <string-array name="homeFeedTypeCategories">
+        <item>Unanswered</item>
+        <item>Answered</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="homeFeedTimeCategories">
+        <item>Last Day</item>
+        <item>Last Week</item>
+        <item>Last Month</item>
+        <item>Last Year</item>
+        <item>All Time</item>
+    </string-array>
+
+    <string-array name="homeFeedPlaceCategories">
+        <item>International</item>
+        <item>Local</item>
+    </string-array>
+
     <item name="TAG_OBJECT" type="id"/>
+
+    <string name="delete_poll_confirm">Deleting a poll will delete everything associated with that poll for ever. Are you sure you want to delete this poll?</string>
 
 </resources>

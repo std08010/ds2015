@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/slotBg"
+             android:orientation="vertical"
+             tools:context="com.acipi.evote.fragments.HomeFragment">
+
+    <com.acipi.evote.utils.InfiniteScrollListView
+        android:id="@+id/questionFeedsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="0dp"
+        android:divider="@color/actionBar"/>
+
+</FrameLayout>

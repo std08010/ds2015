@@ -54,6 +54,18 @@
         <activity android:name=".FullSceenImageActivity"
                   android:label="Full screen Image preview"/>
 
+        <activity android:name=".CastVoteActivity"
+                  android:label="Cast a Vote"/>
+
+        <activity android:name=".VoteResultsActivity"
+                  android:label="View Vote Results"/>
+
+        <activity android:name=".EditQuestionActivity"
+                  android:label="Edit A Question"/>
+
+        <activity android:name=".UserProfileActivity"
+                  android:label="View a user's profile"/>
+
     </application>
 
 </manifest>

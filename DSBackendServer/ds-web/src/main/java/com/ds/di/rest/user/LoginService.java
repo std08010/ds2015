@@ -27,7 +27,7 @@ import com.ds.di.utils.RestServiceUtils;
  *
  */
 @Component(value = LoginService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManager")
 @Path("/secure/user/login")
 public class LoginService
 {

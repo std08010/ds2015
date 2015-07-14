@@ -11,6 +11,19 @@
 		maxWaitMillis="10000"
 		removeAbandoned="true"
 	   	removeAbandonedTimeout="233" />
+	   	
+	<Resource name="jdbc/ds_read" 
+		auth="Container" 
+		type="javax.sql.DataSource"
+		driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://localhost:5432/ds_read" 
+		username="postgres"
+		password="postgres" 
+		maxActive="20" 
+		maxIdle="10" 
+		maxWaitMillis="10000"
+		removeAbandoned="true"
+	   	removeAbandonedTimeout="233" />
 		
 	<Resource name="jdbc/ds_live" 
 		auth="Container" 

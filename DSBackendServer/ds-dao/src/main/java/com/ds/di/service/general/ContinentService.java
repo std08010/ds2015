@@ -21,7 +21,7 @@ import com.ds.di.utils.Globals;
 
 @Service(value = ContinentService.SPRING_KEY)
 @Scope(Globals.SPRING_SCOPE_PROTOTYPE)
-@Transactional
+@Transactional(value = "transactionManager")
 public class ContinentService extends AbstractServiceImpl<Continent, Long>
 {
 	public static final String	SPRING_KEY	= "com.ds.di.service.general.ContinentService";

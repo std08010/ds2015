@@ -1,9 +1,13 @@
 /**
- * 
+ *
  */
 package com.acipi.evote.rest.dto.user;
 
 import com.acipi.evote.rest.dto.AbstractOutDTO;
+import com.acipi.evote.rest.dto.vote.QuestionFeedSingleOutDTO;
+import com.acipi.evote.rest.dto.vote.QuestionSingleOutDTO;
+
+import java.util.List;
 
 /**
  * @author Altin Cipi
@@ -11,10 +15,12 @@ import com.acipi.evote.rest.dto.AbstractOutDTO;
  */
 public class UserProfileGetAllInfoOutDTO extends AbstractOutDTO
 {
-	private String	username;
-	private String	avatarURL;
-	private String	country;
-	private String	countryFlagURL;
+	private String						    username;
+	private String						    avatarURL;
+	private String						    country;
+	private String						    countryFlagURL;
+	private Long						    allQuestions;
+	private List<QuestionFeedSingleOutDTO>	questions;
 
 	/**
 	 * @return the username
@@ -82,5 +88,37 @@ public class UserProfileGetAllInfoOutDTO extends AbstractOutDTO
 	public void setCountryFlagURL(String countryFlagURL)
 	{
 		this.countryFlagURL = countryFlagURL;
+	}
+
+	/**
+	 * @return the allQuestions
+	 */
+	public Long getAllQuestions()
+	{
+		return allQuestions;
+	}
+
+	/**
+	 * @param allQuestions the allQuestions to set
+	 */
+	public void setAllQuestions(Long allQuestions)
+	{
+		this.allQuestions = allQuestions;
+	}
+
+	/**
+	 * @return the questions
+	 */
+	public List<QuestionFeedSingleOutDTO> getQuestions()
+	{
+		return questions;
+	}
+
+	/**
+	 * @param questions the questions to set
+	 */
+	public void setQuestions(List<QuestionFeedSingleOutDTO> questions)
+	{
+		this.questions = questions;
 	}
 }
