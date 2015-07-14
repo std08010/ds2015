@@ -3,6 +3,7 @@ package com.ds.di.balancer.test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -59,9 +60,14 @@ class LoadBalanceTesterThread extends Thread {
 	        
 	        URL url = new URL(HTTP_PREFIX+domain+requestURL);
 			
-			
-	        URLConnection yc = url.openConnection();
-	        BufferedReader in = new BufferedReader( new InputStreamReader(yc.getInputStream()));
+	        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+	        HttpURLConnection.setFollowRedirects(false);
+	        huc.setConnectTimeout(1000);
+	        huc.setRequestMethod("GET");
+	        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+	        huc.connect();
+
+	        BufferedReader in = new BufferedReader( new InputStreamReader(huc.getInputStream()));
 
 	        in.close();
 			
