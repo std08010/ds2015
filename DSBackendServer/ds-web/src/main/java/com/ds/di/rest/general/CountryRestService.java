@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,8 @@ public class CountryRestService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getAllCountries()
 	{
+		Logger.getLogger(this.getClass()).info("getAllCountries");
+		
 		CountryAllOutDTO output = new CountryAllOutDTO();
 
 		try
@@ -72,6 +75,8 @@ public class CountryRestService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getFlagURL(CountryGetFlagURLInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getFlagURL");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");

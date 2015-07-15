@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -95,8 +96,10 @@ public class QuestionsService
 	@Path("/add_question")
 	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response addComment(AddQuestionInDTO input)
+	public Response addQuestion(AddQuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("addQuestion");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -146,6 +149,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getQuestionForCastVote(QuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getQuestionForCastVote");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -226,6 +231,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response castVote(CastVoteInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("castVote");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -295,6 +302,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getQuestionForVoteResults(QuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getQuestionForVoteResults");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -376,6 +385,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getQuestionForEdit(QuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getQuestionForEdit");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -449,6 +460,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response deleteQuestion(DeleteQuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("deleteQuestion");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -494,6 +507,8 @@ public class QuestionsService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response editQuestion(EditQuestionInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("editQuestion");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -556,8 +571,10 @@ public class QuestionsService
 	@Path("/my_questions")
 	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response getAll(MyQuestionsGetAllQuestionsInDTO input)
+	public Response getMyQuestions(MyQuestionsGetAllQuestionsInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getMyQuestions");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");

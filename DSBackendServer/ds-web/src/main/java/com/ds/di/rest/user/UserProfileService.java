@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,8 @@ public class UserProfileService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getAllInfo(UserProfileGetAllInfoInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getAllInfo");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
