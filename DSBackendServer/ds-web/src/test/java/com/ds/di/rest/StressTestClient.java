@@ -50,7 +50,7 @@ public class StressTestClient extends Thread
 
 			Client client = Client.create(clientConfig);
 
-			WebResource webResource = client.resource("http://ds-di-180488603.eu-west-1.elb.amazonaws.com/ds-web/rest/general/test/stress/sleep_no_transactions");
+			WebResource webResource = client.resource("http://ec2-52-17-140-15.eu-west-1.compute.amazonaws.com/ds-web/rest/general/test/stress/sleep_no_transactions");
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
