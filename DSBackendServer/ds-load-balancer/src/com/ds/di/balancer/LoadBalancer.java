@@ -74,7 +74,7 @@ class LoadBalancer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		LoadBalancer balancer = new LoadBalancer("servers.ini", 2000, "balancerLog.txt");
+		LoadBalancer balancer = new LoadBalancer("servers.ini", 2000, null);
 		
 		balancer.startServer();
 		
