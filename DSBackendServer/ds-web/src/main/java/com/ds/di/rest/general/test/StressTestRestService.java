@@ -41,8 +41,8 @@ public class StressTestRestService
 
 		try
 		{
-			Thread.sleep(2 * 60 * 1000);
-			output.setResult("Have slept successfully for 2 minutes");
+			Thread.sleep(1 * 60 * 1000);
+			output.setResult("Have slept successfully for 1 minute");
 		}
 		catch (Exception e)
 		{
