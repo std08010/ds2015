@@ -3,16 +3,10 @@ package com.ds.di.balancer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.xlightweb.HttpRequest;
-import org.xlightweb.IHttpRequest;
-import org.xlightweb.IHttpResponse;
-import org.xlightweb.IHttpResponseHandler;
-import org.xlightweb.client.HttpClient;
-import org.xsocket.Execution;
 
 public class ServerUnit  implements Comparable<ServerUnit>{
 	private static final double statusUpdateWeight = 0.75;
@@ -67,11 +61,16 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	    	String domain = address.getHostString()+(address.getPort()>0?(":"+address.getPort()):"");
 	        URL url = new URL("http://"+domain+"/ds-web/rest/general/balancer/status");
 			
+	        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+	        HttpURLConnection.setFollowRedirects(false);
+	        huc.setConnectTimeout(2 * 1000);
+	        huc.setRequestMethod("GET");
+	        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+	        huc.connect();
 			
-	        URLConnection yc = url.openConnection();
 	        BufferedReader in = new BufferedReader(
 	                                new InputStreamReader(
-	                                yc.getInputStream()));
+	                                huc.getInputStream()));
 	        String inputLine;
 	        
 	        while ((inputLine = in.readLine()) != null){ 

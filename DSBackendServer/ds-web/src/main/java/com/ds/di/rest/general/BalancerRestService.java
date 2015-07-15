@@ -30,7 +30,7 @@ import com.ds.di.service.user.UserService;
 import com.ds.di.utils.RestServiceUtils;
 
 @Component(value = BalancerRestService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManager")
 @Path("/general/balancer")
 public class BalancerRestService
 {

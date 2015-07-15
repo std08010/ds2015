@@ -1,12 +1,12 @@
 package com.ds.di.balancer;
 
-public class ServerCollectionUpdateThread extends Thread {
-    private ServerCollection servers;
+public class ServerUnitUpdateThread extends Thread {
+    private ServerUnit server;
     private long interval;
     private boolean toStop;
-	public ServerCollectionUpdateThread(ServerCollection servers, long interval)
+	public ServerUnitUpdateThread(ServerUnit server, long interval)
     {
-    	this.servers = servers;
+    	this.server = server;
     	this.interval = interval;
     }
 	
@@ -15,12 +15,11 @@ public class ServerCollectionUpdateThread extends Thread {
     	toStop = false;
     	synchronized(this){
     		while(!toStop){
-    			long t = System.nanoTime();
-    			servers.updateStatuses();
-    			t = System.nanoTime() - t;
+    			server.getStatus();
     			try {
-    				this.wait(Math.max(1, interval - (t / 1000000)));
+    				this.wait(interval);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
     		}
@@ -40,10 +39,4 @@ public class ServerCollectionUpdateThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-    
-    public void updateLoop(){
-    	
-    	servers.updateStatuses();
-    }
-                                     
 }
