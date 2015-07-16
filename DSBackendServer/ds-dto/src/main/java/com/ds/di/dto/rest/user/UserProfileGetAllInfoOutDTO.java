@@ -3,16 +3,22 @@
  */
 package com.ds.di.dto.rest.user;
 
+import java.util.List;
+
+import com.ds.di.dto.rest.vote.QuestionFeedSingleOutDTO;
+
 /**
  * @author Altin Cipi
  *
  */
 public class UserProfileGetAllInfoOutDTO
 {
-	private String	username;
-	private String	avatarURL;
-	private String	country;
-	private String	countryFlagURL;
+	private String							username;
+	private String							avatarURL;
+	private String							country;
+	private String							countryFlagURL;
+	private Long							allQuestions;
+	private List<QuestionFeedSingleOutDTO>	questions;
 
 	/**
 	 * @return the username
@@ -80,5 +86,39 @@ public class UserProfileGetAllInfoOutDTO
 	public void setCountryFlagURL(String countryFlagURL)
 	{
 		this.countryFlagURL = countryFlagURL;
+	}
+
+	/**
+	 * @return the allQuestions
+	 */
+	public Long getAllQuestions()
+	{
+		return allQuestions;
+	}
+
+	/**
+	 * @param allQuestions
+	 *            the allQuestions to set
+	 */
+	public void setAllQuestions(Long allQuestions)
+	{
+		this.allQuestions = allQuestions;
+	}
+
+	/**
+	 * @return the questions
+	 */
+	public List<QuestionFeedSingleOutDTO> getQuestions()
+	{
+		return questions;
+	}
+
+	/**
+	 * @param questions
+	 *            the questions to set
+	 */
+	public void setQuestions(List<QuestionFeedSingleOutDTO> questions)
+	{
+		this.questions = questions;
 	}
 }

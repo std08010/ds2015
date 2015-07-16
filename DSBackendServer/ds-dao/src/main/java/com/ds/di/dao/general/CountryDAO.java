@@ -24,41 +24,41 @@ import com.ds.di.utils.Globals;
  */
 @Repository(value = CountryDAO.SPRING_KEY)
 @Scope(Globals.SPRING_SCOPE_PROTOTYPE)
-@Transactional
+@Transactional(value = "transactionManager")
 public class CountryDAO extends AbstractDAOImpl<Country, Long>
 {
 	public static final String	SPRING_KEY	= "com.ds.di.dao.general.CountryDAO";
-	
+
 	public CountryDAO()
 	{
 		super(Country.class);
 	}
-	
+
 	public Country getCountry(String name)
 	{
 		return this.findByAttribute("name", name);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Country> getCountriesByContinent(Continent continent)
 	{
 		Criteria cr = getCriteria();
 		cr.add(Restrictions.eq("continent", continent));
 		cr.addOrder(Order.asc("name"));
-		
+
 		return cr.list();
 	}
-	
+
 	public List<Country> getAllCountries()
 	{
 		return this.findAllByOrder("name", true);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<String> getAllCountryNames()
 	{
 		Query query = this.getSession().createQuery("SELECT name FROM Country ORDER BY name ASC");
-		
+
 		return query.list();
 	}
 }

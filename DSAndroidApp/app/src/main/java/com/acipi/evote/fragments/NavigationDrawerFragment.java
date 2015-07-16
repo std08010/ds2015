@@ -297,11 +297,11 @@ public class NavigationDrawerFragment extends Fragment
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example)
-        {
-            UIHelper.displayMessage(getActivity(), "Example action.");
-            return true;
-        }
+//        if (item.getItemId() == R.id.action_example)
+//        {
+//            UIHelper.displayMessage(getActivity(), "Example action.");
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

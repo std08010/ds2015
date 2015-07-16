@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ds.di.dto.rest.user.MyProfileGetAllInfoInDTO;
 import com.ds.di.dto.rest.user.MyProfileGetAllInfoOutDTO;
 import com.ds.di.model.user.User;
-import com.ds.di.service.user.UserService;
+import com.ds.di.service.user.UserServiceRead;
 import com.ds.di.utils.RestServiceUtils;
 
 /**
@@ -29,15 +30,15 @@ import com.ds.di.utils.RestServiceUtils;
  *
  */
 @Component(value = MyProfileService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManagerRead")
 @Path("/secure/user/myprofile")
 public class MyProfileService
 {
 	public static final String	SPRING_KEY	= "com.ds.di.rest.user.MyProfileService";
 
 	@Autowired
-	@Qualifier(UserService.SPRING_KEY)
-	private UserService			userService;
+	@Qualifier(UserServiceRead.SPRING_KEY)
+	private UserServiceRead		userServiceRead;
 
 	@Autowired
 	@Qualifier(value = "myProperties")
@@ -52,6 +53,8 @@ public class MyProfileService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getAllInfo(MyProfileGetAllInfoInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getAllInfo");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -61,7 +64,7 @@ public class MyProfileService
 
 		try
 		{
-			User user = this.userService.getUserByUsernameAndToken(input.getUsername(), input.getSessionToken());
+			User user = this.userServiceRead.getUserByUsernameAndToken(input.getUsername(), input.getSessionToken());
 
 			if (user == null)
 			{

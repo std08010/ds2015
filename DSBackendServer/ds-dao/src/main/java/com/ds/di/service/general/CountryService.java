@@ -24,7 +24,7 @@ import com.ds.di.utils.Globals;
 
 @Service(value = CountryService.SPRING_KEY)
 @Scope(Globals.SPRING_SCOPE_PROTOTYPE)
-@Transactional
+@Transactional(value = "transactionManager")
 public class CountryService extends AbstractServiceImpl<Country, Long>
 {
 	public static final String	SPRING_KEY	= "com.ds.di.service.general.CountryService";

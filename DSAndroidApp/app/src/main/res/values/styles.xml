@@ -47,4 +47,25 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="slotPublishDate">
+        <item name="android:textColor">@color/slotPublishDate</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="slotOwnerName">
+        <item name="android:textColor">@color/slotOwner</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="feedPublishDate">
+        <item name="android:textColor">@color/slotStatus</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="slotStatus">
+        <item name="android:textColor">@color/slotStatus</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

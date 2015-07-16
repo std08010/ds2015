@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ import com.ds.di.dto.rest.general.CountryAllOutDTO;
 import com.ds.di.dto.rest.general.CountryGetFlagURLInDTO;
 import com.ds.di.dto.rest.general.CountryGetFlagURLOutDTO;
 import com.ds.di.model.general.Country;
-import com.ds.di.service.general.CountryService;
+import com.ds.di.service.general.CountryServiceRead;
 import com.ds.di.utils.RestServiceUtils;
 
 /**
@@ -29,15 +30,15 @@ import com.ds.di.utils.RestServiceUtils;
  *
  */
 @Component(value = CountryRestService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManagerRead")
 @Path("/general/country")
 public class CountryRestService
 {
 	public static final String	SPRING_KEY	= "com.ds.di.rest.general.CountryRestService";
-	
+
 	@Autowired
-	@Qualifier(CountryService.SPRING_KEY)
-	private CountryService	countryService;
+	@Qualifier(CountryServiceRead.SPRING_KEY)
+	private CountryServiceRead	countryServiceRead;
 
 	/**
 	 * @return
@@ -47,11 +48,13 @@ public class CountryRestService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getAllCountries()
 	{
+		Logger.getLogger(this.getClass()).info("getAllCountries");
+		
 		CountryAllOutDTO output = new CountryAllOutDTO();
 
 		try
 		{
-			output.setCountries(this.countryService.getAllCountryNames());
+			output.setCountries(this.countryServiceRead.getAllCountryNames());
 		}
 		catch (Exception e)
 		{
@@ -62,7 +65,7 @@ public class CountryRestService
 
 		return Response.status(Status.OK).entity(output).build();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -72,18 +75,20 @@ public class CountryRestService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response getFlagURL(CountryGetFlagURLInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("getFlagURL");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
 		}
-		
+
 		CountryGetFlagURLOutDTO output = new CountryGetFlagURLOutDTO();
 
 		try
 		{
-			Country country = this.countryService.getCountry(input.getCountryName());
-			
-			if(country != null)
+			Country country = this.countryServiceRead.getCountry(input.getCountryName());
+
+			if (country != null)
 			{
 				output.setCountryFlagURL(country.getFlagURL());
 			}

@@ -2,6 +2,7 @@ package com.acipi.evote;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,16 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.acipi.evote.db.service.UserService;
+import com.acipi.evote.fragments.AddQuestionFragment;
+import com.acipi.evote.fragments.HomeFragment;
+import com.acipi.evote.fragments.MyQuestionsFragment;
 import com.acipi.evote.fragments.NavigationDrawerFragment;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, AddQuestionFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener, MyQuestionsFragment.OnFragmentInteractionListener
 {
     public static final int HOME_FRAGMENT_NUMBER = 0;
-    public static final int MY_PROFILE_FRAGMENT_NUMBER = 1;
-    public static final int SETTINGS_FRAGMENT_NUMBER = 2;
-    public static final int LOGOUT_FRAGMENT_NUMBER = 3;
+    public static final int ADD_QUESTION_FRAGMENT_NUMBER = 1;
+    public static final int MY_QUESTIONS_FRAGMENT_NUMBER = 2;
+    public static final int SETTINGS_FRAGMENT_NUMBER = 3;
+    public static final int LOGOUT_FRAGMENT_NUMBER = 4;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -78,9 +83,15 @@ public class MainActivity extends ActionBarActivity
         {
             case HOME_FRAGMENT_NUMBER:
                 mTitle = navMenuTitles[HOME_FRAGMENT_NUMBER];
+                mFragment = HomeFragment.newInstance();
                 break;
-            case MY_PROFILE_FRAGMENT_NUMBER:
-                mTitle = navMenuTitles[MY_PROFILE_FRAGMENT_NUMBER];
+            case ADD_QUESTION_FRAGMENT_NUMBER:
+                mTitle = navMenuTitles[ADD_QUESTION_FRAGMENT_NUMBER];
+                mFragment = AddQuestionFragment.newInstance();
+                break;
+            case MY_QUESTIONS_FRAGMENT_NUMBER:
+                mTitle = navMenuTitles[MY_QUESTIONS_FRAGMENT_NUMBER];
+                mFragment = MyQuestionsFragment.newInstance();
                 break;
             case SETTINGS_FRAGMENT_NUMBER:
                 mTitle = navMenuTitles[SETTINGS_FRAGMENT_NUMBER];
@@ -139,12 +150,30 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
+//        if (id == R.id.action_settings)
+//        {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAddQuestionFragmentInteraction(Uri uri)
+    {
+
+    }
+
+    @Override
+    public void onHomeFragmentInteraction(Uri uri)
+    {
+
+    }
+
+    @Override
+    public void onMyPhotosFragmentInteraction(Uri uri)
+    {
+
     }
 
     /**

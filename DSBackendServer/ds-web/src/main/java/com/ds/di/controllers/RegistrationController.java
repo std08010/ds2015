@@ -41,7 +41,7 @@ public class RegistrationController
 		return new RegistrationForm();
 	}
 
-	@Transactional
+	@Transactional(value = "transactionManager")
 	@RequestMapping(value = "index", method = RequestMethod.POST)
 	public String processRegisterUser(@ModelAttribute("index") RegistrationForm form)
 	{
@@ -56,7 +56,7 @@ public class RegistrationController
 		return "index";
 	}
 
-	@Transactional
+	@Transactional(value = "transactionManager")
 	@RequestMapping(value = "index/show-users", method = RequestMethod.GET)
 	public String showAllUsers(Map<String, Object> model)
 	{

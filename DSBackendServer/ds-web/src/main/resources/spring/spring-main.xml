@@ -52,6 +52,18 @@
 	</bean>
 
 	<bean
+		id="dataSourceRead"
+		class="org.springframework.jndi.JndiObjectFactoryBean"
+		scope="singleton">
+		<property
+			name="jndiName"
+			value="java:comp/env/jdbc/ds_read" />
+		<property
+			name="resourceRef"
+			value="true" />
+	</bean>
+
+	<bean
 		id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property
@@ -86,6 +98,40 @@
 	</bean>
 
 	<bean
+		id="entityManagerFactoryRead"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property
+			name="persistenceUnitName"
+			value="ds_read" />
+		<property
+			name="persistenceXmlLocation"
+			value="classpath:persistence_read.xml" />
+		<property
+			name="dataSource"
+			ref="dataSourceRead" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property
+					name="showSql"
+					value="false" />
+			</bean>
+		</property>
+		<property name="jpaPropertyMap">
+			<map>
+				<entry
+					key="hibernate.dialect"
+					value="org.hibernate.dialect.PostgreSQLDialect" />
+				<entry
+					key="hibernate.hbm2ddl.auto"
+					value="update" />
+				<entry
+					key="hibernate.format_sql"
+					value="true" />
+			</map>
+		</property>
+	</bean>
+
+	<bean
 		id="transactionManager"
 		class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property
@@ -93,8 +139,20 @@
 			ref="entityManagerFactory" />
 	</bean>
 
+	<bean
+		id="transactionManagerRead"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property
+			name="entityManagerFactory"
+			ref="entityManagerFactoryRead" />
+	</bean>
+
 	<tx:annotation-driven
 		transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<tx:annotation-driven
+		transaction-manager="transactionManagerRead"
 		proxy-target-class="true" />
 
 </beans>

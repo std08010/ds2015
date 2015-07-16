@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.ds.di.model.BaseEntity;
 import com.ds.di.utils.lists.ListUtils;
@@ -25,7 +26,8 @@ import com.ds.di.utils.lists.ListUtils;
  */
 public abstract class AbstractDAOImpl<T extends BaseEntity, PK extends Serializable> implements AbstractDAO<T, PK>
 {
-	@PersistenceContext
+	@PersistenceContext(unitName = "ds")
+	@Qualifier(value = "entityManagerFactory")
 	private EntityManager	entityManager;
 
 	private Class<T>		entityClass;
@@ -39,12 +41,12 @@ public abstract class AbstractDAOImpl<T extends BaseEntity, PK extends Serializa
 	{
 	}
 
-	protected EntityManager getEntityManager()
+	public EntityManager getEntityManager()
 	{
 		return this.entityManager;
 	}
 
-	protected Session getSession()
+	public Session getSession()
 	{
 		if (this.getEntityManager() != null)
 		{
@@ -74,7 +76,7 @@ public abstract class AbstractDAOImpl<T extends BaseEntity, PK extends Serializa
 	{
 		entity.setInsertedAt(DateTime.now());
 		entity.setUpdatedAt(entity.getInsertedAt());
-		this.entityManager.persist(entity);
+		this.getEntityManager().persist(entity);
 	}
 
 	@Override
@@ -97,15 +99,15 @@ public abstract class AbstractDAOImpl<T extends BaseEntity, PK extends Serializa
 	@Override
 	public void delete(T entity)
 	{
-		this.entityManager.remove(entity);
-		this.entityManager.flush();
+		this.getEntityManager().remove(entity);
+		this.getEntityManager().flush();
 	}
 
 	@Override
 	public T update(T entity)
 	{
 		entity.setUpdatedAt(DateTime.now());
-		return this.entityManager.merge(entity);
+		return this.getEntityManager().merge(entity);
 	}
 
 	@Override
@@ -126,14 +128,14 @@ public abstract class AbstractDAOImpl<T extends BaseEntity, PK extends Serializa
 	@Override
 	public T refresh(T entity)
 	{
-		this.entityManager.refresh(entity);
+		this.getEntityManager().refresh(entity);
 		return entity;
 	}
 
 	@Override
 	public T find(PK id)
 	{
-		return (T) this.entityManager.find(entityClass, id);
+		return (T) this.getEntityManager().find(entityClass, id);
 	}
 
 	@Override

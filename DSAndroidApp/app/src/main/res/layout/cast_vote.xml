@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/slotBg"
+              android:orientation="vertical"
+              android:padding="8dp"
+              tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:id="@+id/castVoteBody"
+        style="@style/newStatusBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/questionCaption"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Question Description"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#E9E9E9"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="3dp"
+            android:id="@+id/options"
+            android:checkedButton="@+id/option1" >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option1"
+                android:text="Option 1"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option2"
+                android:text="Option 2"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option3"
+                android:text="Option 3"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option4"
+                android:text="Option 4"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option5"
+                android:text="Option 5"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option6"
+                android:text="Option 6"
+                android:visibility="gone"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#E9E9E9"/>
+
+    <LinearLayout
+        android:id="@+id/castVoteFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelVote"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_delete_photo_button"
+            android:text="CANCEL"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:id="@+id/castVote"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_change_photo_button"
+            android:text="VOTE"
+            android:textColor="@color/black"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</LinearLayout>

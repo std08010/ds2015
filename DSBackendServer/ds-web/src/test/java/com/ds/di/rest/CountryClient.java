@@ -8,6 +8,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.ds.di.dto.rest.ErrorDTO;
 import com.ds.di.dto.rest.general.CountryAllOutDTO;
+import com.ds.di.dto.rest.general.CountryGetFlagURLInDTO;
+import com.ds.di.dto.rest.general.CountryGetFlagURLOutDTO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -64,6 +66,24 @@ public class CountryClient
 			{
 				System.out.println(country);
 			}
+			
+			webResource = client.resource("http://localhost:8080/ds-web/rest/general/country/get_flag_url");
+			
+			CountryGetFlagURLInDTO input = new CountryGetFlagURLInDTO();
+			input.setCountryName("Greece");
+
+			response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, input);
+
+			if (response.getStatus() != Status.OK.getStatusCode())
+			{
+				ErrorDTO error = response.getEntity(ErrorDTO.class);
+				System.out.println("Failed : HTTP error code : " + response.getStatus() + " " + Status.fromStatusCode(response.getStatus()) + ", error message : " + error.getMessage());
+				return;
+			}
+
+			System.out.println("Output from Server .... \n");
+			CountryGetFlagURLOutDTO output2 = response.getEntity(CountryGetFlagURLOutDTO.class);
+			System.out.println(output2.getCountryFlagURL());
 		}
 		catch (Exception e)
 		{

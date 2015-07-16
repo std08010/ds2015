@@ -15,11 +15,12 @@ public class ServerCollectionUpdateThread extends Thread {
     	toStop = false;
     	synchronized(this){
     		while(!toStop){
+    			long t = System.nanoTime();
     			servers.updateStatuses();
+    			t = System.nanoTime() - t;
     			try {
-    				this.wait(interval);
+    				this.wait(Math.max(1, interval - (t / 1000000)));
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
     		}

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,9 @@ import com.ds.di.dto.rest.user.RegistrationCheckUsernameAvailabilityOutDTO;
 import com.ds.di.dto.rest.user.RegistrationCreateInDTO;
 import com.ds.di.dto.rest.user.RegistrationCreateOutDTO;
 import com.ds.di.model.user.User;
-import com.ds.di.service.general.CountryService;
+import com.ds.di.service.general.CountryServiceRead;
 import com.ds.di.service.user.UserService;
+import com.ds.di.service.user.UserServiceRead;
 import com.ds.di.utils.AmazonS3UploadThread;
 import com.ds.di.utils.EmailValidator;
 import com.ds.di.utils.RestServiceUtils;
@@ -36,7 +38,7 @@ import com.ds.di.utils.UsernameValidator;
  *
  */
 @Component(value = RegistrationService.SPRING_KEY)
-@Transactional
+@Transactional(value = "transactionManager")
 @Path("/secure/user/register")
 public class RegistrationService
 {
@@ -47,8 +49,12 @@ public class RegistrationService
 	private UserService			userService;
 
 	@Autowired
-	@Qualifier(CountryService.SPRING_KEY)
-	private CountryService		countryService;
+	@Qualifier(UserServiceRead.SPRING_KEY)
+	private UserServiceRead		userServiceRead;
+
+	@Autowired
+	@Qualifier(CountryServiceRead.SPRING_KEY)
+	private CountryServiceRead	countryServiceRead;
 
 	@Autowired
 	@Qualifier(value = "myProperties")
@@ -67,6 +73,8 @@ public class RegistrationService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response createNewUser(RegistrationCreateInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("createNewUser");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -94,7 +102,7 @@ public class RegistrationService
 				newUser.setUsername(input.getUsername());
 				newUser.setPassword(SecurityUtils.generateStrongPasswordHash(input.getPassword()));
 				newUser.setEmail(input.getEmail());
-				newUser.setCountry(countryService.getCountry(input.getCountry()));
+				newUser.setCountry(this.countryServiceRead.getCountry(input.getCountry()));
 				newUser.setSessionToken(this.userService.generateSessionToken(newUser));
 				this.userService.create(newUser);
 
@@ -138,6 +146,8 @@ public class RegistrationService
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response checkUsernameAvailability(RegistrationCheckUsernameAvailabilityInDTO input)
 	{
+		Logger.getLogger(this.getClass()).info("checkUsernameAvailability");
+		
 		if (input == null)
 		{
 			return RestServiceUtils.getErrorResponse(Status.BAD_REQUEST, "No input data received. Please check and resend.");
@@ -147,7 +157,7 @@ public class RegistrationService
 
 		try
 		{
-			User user = this.userService.getUser(input.getUsername());
+			User user = this.userServiceRead.getUser(input.getUsername());
 
 			if (user == null)
 			{

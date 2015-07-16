@@ -19,7 +19,7 @@ import com.ds.di.utils.SecurityUtils;
  */
 @Repository(value = UserDAO.SPRING_KEY)
 @Scope(Globals.SPRING_SCOPE_PROTOTYPE)
-@Transactional
+@Transactional(value = "transactionManager")
 public class UserDAO extends AbstractDAOImpl<User, Long>
 {
 	public static final String	SPRING_KEY	= "com.ds.di.dao.user.UserDAO";
