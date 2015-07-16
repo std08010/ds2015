@@ -17,13 +17,28 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	private double latency;
 	private int index;
 	
-	public ServerUnit(InetSocketAddress address){
+	public ServerUnit(ServerSpec spec){
+		
+		address = new InetSocketAddress(spec.host, spec.port);
+		this.addressHTTP = address;
+		this.addressHTTPS = spec.tlsPort==null?null:new InetSocketAddress(address.getAddress(), spec.tlsPort);
+		rank = 100.0;
+		cpuUsage = 100;
+		latency = 10000;
+	}
+	
+	@Deprecated
+	public ServerUnit(InetSocketAddress address, Integer tlsPort){
 		this.address = address;
+		this.addressHTTP = address;
+		this.addressHTTPS = tlsPort==null?null:new InetSocketAddress(address.getAddress(), tlsPort);
 		rank = 100.0;
 		cpuUsage = 100;
 		latency = 10000;
 	}
 	private InetSocketAddress address;
+	private InetSocketAddress addressHTTP;
+	private InetSocketAddress addressHTTPS;
 	public Double rank;
 	
 	public synchronized double getRank(){
@@ -52,13 +67,19 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	public InetSocketAddress getAddress(){
 		return address;
 	}
+	public InetSocketAddress getAddressHTTP(){
+		return addressHTTP;
+	}
+	public InetSocketAddress getAddressHTTPS(){
+		return addressHTTPS;
+	}
 	
 	public void getStatus(){
 		boolean couldConnect = false;
 		double contention = 100;
 		long startTime = System.nanoTime();
 	    try {
-	    	String domain = address.getHostString()+(address.getPort()>0?(":"+address.getPort()):"");
+	    	String domain = addressHTTP.getHostString()+(addressHTTP.getPort()>0?(":"+addressHTTP.getPort()):"");
 	        URL url = new URL("http://"+domain+"/ds-web/rest/general/balancer/status");
 			
 	        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
@@ -66,7 +87,9 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	        huc.setConnectTimeout(2 * 1000);
 	        huc.setRequestMethod("GET");
 	        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+	        try{
 	        huc.connect();
+	        }catch(Exception ex){}
 			
 	        BufferedReader in = new BufferedReader(
 	                                new InputStreamReader(
@@ -81,7 +104,7 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	        couldConnect = true;
 			
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	    long stopTime = System.nanoTime();
 	    if(couldConnect){
@@ -114,7 +137,7 @@ public class ServerUnit  implements Comparable<ServerUnit>{
 	
 	@Override
 	public String toString(){
-		return address.getHostString()+":"+address.getPort()+" " + ((int)(getRank()*10))*0.1;
+		return address.getHostString()+":"+address.getPort()+(addressHTTPS!=null?(":"+addressHTTPS.getPort()):"")+" " + ((int)(getRank()*10))*0.1;
 	}
 }
 

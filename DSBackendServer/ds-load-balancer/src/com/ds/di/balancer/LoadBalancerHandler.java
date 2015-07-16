@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.SSLContext;
 
 import org.xlightweb.IHttpExchange;
 import org.xlightweb.IHttpRequest;
@@ -24,13 +27,15 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 	private File logFile;
 	private BufferedWriter logWriter;
 	private long initTimestamp;
+	private SSLContext sslContext;
 
 	/*
 	 * this class does not implement server monitoring or healthiness checks
 	 */
 
-	public LoadBalancerHandler(ServerCollection servers, String logOutput) {
+	public LoadBalancerHandler(ServerCollection servers, String logOutput, SSLContext sslContext) {
 		this.servers = servers;
+		this.sslContext = sslContext;
 		initTimestamp = System.nanoTime();
 		if(logOutput!=null && logOutput.length()>0){
 			try {
@@ -53,7 +58,13 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 	}
 
 	public void onInit() {
-		httpClient = new HttpClient();
+		try {
+			//sslContext = null;//SSLContext.getDefault();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		httpClient = sslContext==null?new HttpClient():new HttpClient(sslContext);
 		httpClient.setAutoHandleCookies(false);
 	}
 
@@ -71,24 +82,25 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 		IHttpRequest request = exchange.getRequest();
 
 		while(true){
+			final URL url = request.getRequestUrl();
+			boolean isSecure = false;//url.getProtocol().equalsIgnoreCase("https");
 
-			// retrieve the business server address and update the Request-URL of the request
-			final ServerUnit serverUnit = servers.getForRequest();
+			final ServerUnit serverUnit = servers.getForRequest(isSecure);
 			final long requestTimestamp = System.nanoTime() - initTimestamp;
 			final double serverRank = serverUnit.getRank();
 			final double serverCpuUsage = serverUnit.getCpuUsage();
 			final double serverLatency = serverUnit.getLatency();
-			//InetSocketAddress server = new InetSocketAddress(serverUnit.getAddress().getAddress().getHostAddress(), serverUnit.getAddress().getPort());
-			InetSocketAddress server = serverUnit.getAddress();
-			final URL url = request.getRequestUrl();
-			final URL newUrl = new URL(url.getProtocol(), server.getHostName(), server.getPort(), url.getFile());
+
+			InetSocketAddress server = isSecure?serverUnit.getAddressHTTPS():serverUnit.getAddressHTTP();
+			final URL newUrl = new URL((isSecure?"https":"http"), server.getHostName(), server.getPort(), url.getFile());
 	
 			final String oldDomain = "://"+url.getHost()+(url.getPort()>0?(":"+url.getPort()):"");
 			final String newDomain = "://"+newUrl.getHost()+":"+newUrl.getPort();
 	
 			request.setHost(newUrl.getHost()+":"+newUrl.getPort());
-	
-	
+			request.setRequestUrl(new URL((isSecure?"https":"http")+newDomain+url.getFile()));
+			request.isSecure();
+			
 			// create a response handler to forward the response to the caller
 			IHttpResponseHandler respHdl = new IHttpResponseHandler() {
 	
@@ -124,6 +136,7 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 				httpClient.send(request, respHdl);
 				break;
 			} catch (IOException e) {
+				e.printStackTrace();
 				servers.registerServerFailure(serverUnit);
 				logServerFailure(requestTimestamp, serverUnit);
 			}
@@ -133,11 +146,9 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 	
 	private void logServerFailure(long requestTimestamp, ServerUnit server){
 		try {
-			String logEntry = "FAILURE "+ server.getAddress().toString()+ "\n";
-			logEntry = (int)(requestTimestamp/100000000)+","+server.getIndex()+",-1,-1,-1,-1,0\n";
+			String logEntry = (int)(requestTimestamp/100000000)+","+server.getIndex()+",-1,-1,-1,-1,0\n";
 			//System.out.print(logEntry);
 			logWriter.append(logEntry);
-			//logWriter.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,11 +158,9 @@ class LoadBalancerHandler implements IHttpRequestHandler, ILifeCycle {
 	private void logRequest(long requestTimestamp, ServerUnit server, double serverRank, double serverCpuUsage, double serverLatency, long requestTime){
 		try {
 			String logEntry = (int)(requestTimestamp/100000000)+","+server.getIndex()+","+serverRank+","+serverCpuUsage+","+serverLatency+","+((double)requestTime)*0.000001+",1\n";
-			//String logEntry = server.getAddress().toString() + " "+serverRank+" : "+requestTime* 0.0000001 + "\n";
 
 			//System.out.print(logEntry);
 			logWriter.append(logEntry);
-			//logWriter.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

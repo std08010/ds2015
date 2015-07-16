@@ -10,20 +10,42 @@ public class ServerCollection {
 	private boolean alreadyReplaced;
 	private ServerCollectionUpdateThread updateThread;
 	
+	@Deprecated
 	public ServerCollection(InetSocketAddress... srvs){
 		servers = new ArrayList<ServerUnit>();
 		int i=0;
 		for(InetSocketAddress address : srvs){
-			ServerUnit s = new ServerUnit(address);
+			ServerUnit s = new ServerUnit(address, null);
 			s.setIndex(i);
 			servers.add(s);
 			i++;
 		}
 		updateThread = null;
 	}
-	
-	public ServerUnit getForRequest(){
+
+	public ServerCollection(ServerSpec... srvs){
+		servers = new ArrayList<ServerUnit>();
+		int i=0;
+		for(ServerSpec sp : srvs){
+			ServerUnit s = new ServerUnit(sp);
+			s.setIndex(i);
+			servers.add(s);
+			i++;
+		}
+		updateThread = null;
+	}
+
+	public ServerUnit getForRequest(boolean secure){
 		ServerUnit result = servers.get(0);
+		if(secure){
+			result = null;
+			for(int i=0; i<servers.size(); i++){
+				if(servers.get(i).getAddressHTTPS()!=null){
+					result = servers.get(0);
+					break;
+				}
+			}
+		}
 		result.recordRequest();
 		synchronized (servers) {
 			Collections.sort(servers);
@@ -65,10 +87,11 @@ public class ServerCollection {
 		}
 		Collections.sort(servers);
 		alreadyReplaced = false;
-		
+		System.out.println("Updated "+servers.size()+" servers");
 		for(ServerUnit unit : servers){
 			System.out.println(unit);
 		}
+		System.out.println("done\n");
 
 	}
 	
